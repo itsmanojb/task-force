@@ -1,35 +1,31 @@
 {
   "name": "task-force",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "author": {
     "name": "Manoj Barman",
     "url": "https://manojbarman.in"
   },
-  "homepage": "https://taskforce.netlify.app/",
+  "homepage": "https://taskforce-ab10.onrender.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/itsmanojb/task-force.git"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "firebase": "^7.15.1",
-    "node-sass": "^4.14.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "firebase": "^8.5.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.21.1",
+    "@vitejs/plugin-react": "^5.0.4",
+    "vite": "^7.1.9",
     "react-dragula": "^1.1.17",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.0",
     "react-transition-group": "^4.4.1",
     "shortid": "^2.2.15"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": "react-app"
