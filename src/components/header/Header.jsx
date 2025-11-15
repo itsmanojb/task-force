@@ -1,20 +1,18 @@
-/* eslint-disable 
+/* eslint-disable
 jsx-a11y/anchor-is-valid,
-no-unused-vars 
+no-unused-vars
 */
 
 import React, { useContext, useState, useRef, useEffect } from "react";
-import { NavLink, withRouter, useHistory } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 
 import { AuthContext } from "@/context/Auth";
 import { ProjectContext } from "@/context/Project";
 import { ModalPageContext } from "@/context/ModalPage";
 import { DropdownContext } from "@/context/Dropdown";
-
 import { getProjects, getBoards } from "@/utils/data";
-
-import { ReactComponent as Logo } from "@/assets/icons/logo.svg";
+import Logo from "@/assets/icons/logo.svg";
 import Icon from "@/components/misc/IonIcon";
 import "./Header.css";
 
@@ -46,7 +44,7 @@ const NavItem = ({ children, link, icon, label, klass = "icon-button" }) => {
 };
 
 const DropdownMenu = ({ items, current, setProject }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { currentUser } = useContext(AuthContext);
   const [open, setOpen] = useContext(DropdownContext);
@@ -80,18 +78,18 @@ const DropdownMenu = ({ items, current, setProject }) => {
     setOpen(false);
     setProject(project);
     localStorage.setItem("currentProject", JSON.stringify(project));
-    history.push(`/s/project/${project.id}`);
+    navigate(`/s/project/${project.id}`);
   }
 
   function resetProject() {
     localStorage.removeItem("currentProject");
-    history.push(`/s/dashboard`);
+    navigate(`/s/dashboard`);
     setProject(null);
     setOpen(false);
   }
 
   function setBoard(board) {
-    history.push(`/s/board/${board.id}`, { boardName: board.name });
+    navigate(`/s/board/${board.id}`, { boardName: board.name });
     setOpen(false);
   }
 
@@ -122,7 +120,8 @@ const DropdownMenu = ({ items, current, setProject }) => {
     ) : (
       <a
         className="menu-item"
-        onClick={(e) => (goToMenu ? setActiveMenu(goToMenu) : handleClick(e))}>
+        onClick={(e) => (goToMenu ? setActiveMenu(goToMenu) : handleClick(e))}
+      >
         {leftIcon && <span className="icon-button">{leftIcon}</span>}
         {children}
         <span className="icon-right">{rightIcon}</span>
@@ -137,7 +136,8 @@ const DropdownMenu = ({ items, current, setProject }) => {
         timeout={500}
         classNames="menu-primary"
         unmountOnExit
-        onEnter={calcHeight}>
+        onEnter={calcHeight}
+      >
         <div className="menu">
           <div className="overscroll">
             {current ? (
@@ -146,20 +146,22 @@ const DropdownMenu = ({ items, current, setProject }) => {
                   <DropdownItem
                     leftIcon={<Icon name="folder-outline" />}
                     rightIcon={<Icon name="chevron-forward" />}
-                    goToMenu="boards">
+                    goToMenu="boards"
+                  >
                     {current.name}
                   </DropdownItem>
                   <span className="divider"></span>
                   {items
                     .filter(
-                      (item) => current.name !== item.name && !item.archived
+                      (item) => current.name !== item.name && !item.archived,
                     )
                     .map((item, i) => (
                       <DropdownItem
                         key={i}
                         leftIcon={<Icon name="folder-outline" />}
                         role={"SET_PROJECT"}
-                        item={item}>
+                        item={item}
+                      >
                         {item.name}
                       </DropdownItem>
                     ))}
@@ -167,7 +169,8 @@ const DropdownMenu = ({ items, current, setProject }) => {
                 <span className="divider"></span>
                 <DropdownItem
                   leftIcon={<Icon name="chevron-back" />}
-                  role={"RESET_PROJECT"}>
+                  role={"RESET_PROJECT"}
+                >
                   Projects Home
                 </DropdownItem>
               </>
@@ -180,7 +183,8 @@ const DropdownMenu = ({ items, current, setProject }) => {
                       key={i}
                       leftIcon={<Icon name="folder-outline" />}
                       role={"SET_PROJECT"}
-                      item={item}>
+                      item={item}
+                    >
                       {item.name}
                     </DropdownItem>
                   ))}
@@ -197,11 +201,13 @@ const DropdownMenu = ({ items, current, setProject }) => {
           timeout={500}
           classNames="menu-secondary"
           unmountOnExit
-          onEnter={calcHeight}>
+          onEnter={calcHeight}
+        >
           <div className="menu">
             <DropdownItem
               goToMenu="main"
-              leftIcon={<Icon name="chevron-back" />}>
+              leftIcon={<Icon name="chevron-back" />}
+            >
               Back to {current.name}
             </DropdownItem>
             <span className="divider"></span>
@@ -210,7 +216,8 @@ const DropdownMenu = ({ items, current, setProject }) => {
                 key={i}
                 leftIcon={<Icon name="clipboard-outline" />}
                 role={"SET_BOARD"}
-                item={board}>
+                item={board}
+              >
                 {board.name}
               </DropdownItem>
             ))}
@@ -238,13 +245,14 @@ const DropdownMenu = ({ items, current, setProject }) => {
   );
 };
 
-const Header = ({ update, location }) => {
+const Header = ({ update }) => {
   const { currentUser } = useContext(AuthContext);
   const [currentProject, setCurrentProject] = useContext(ProjectContext);
   const [modalPage, setModalPage] = useContext(ModalPageContext);
   const [currentPage, setCurrentPage] = useState("Select Project");
   const [currentBoard, setCurrentBoard] = useState("");
   const [projects, setProjects] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     (async function () {
@@ -274,14 +282,15 @@ const Header = ({ update, location }) => {
   return (
     <header className="app-header">
       <NavLink to="/s" className="brand">
-        <Logo />
+        <img src={Logo} alt="logo" />
       </NavLink>
       <div className="nav-actions">
         <Navbar>
           <NavItem
             label={currentPage}
             icon={<Icon name="folder-open-outline" />}
-            klass="text-button">
+            klass="text-button"
+          >
             <DropdownMenu
               items={projects}
               current={currentProject}
@@ -301,7 +310,8 @@ const Header = ({ update, location }) => {
             modalPage === "addboard"
           }
           onClick={(e) => setModalPage({ name: "addboard" })}
-          className="cta-btn">
+          className="cta-btn"
+        >
           {" "}
           Create New Board{" "}
         </button>
@@ -315,4 +325,4 @@ const Header = ({ update, location }) => {
   );
 };
 
-export default withRouter(Header);
+export default Header;

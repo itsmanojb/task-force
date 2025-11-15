@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
-  useRouteMatch,
-  Redirect,
+  Navigate,
 } from "react-router-dom";
 
 import { ProjectContextProvider } from "@/context/Project";
@@ -21,7 +20,7 @@ import { AddProject } from "@/components/create-new/AddProject";
 import Header from "@/components/header/Header";
 
 const SecurePage = () => {
-  let { path } = useRouteMatch();
+  // let { path } = useRouteMatch();
   const [modalPage, setModalPage] = useContext(ModalPageContext);
   const [updateTime, setUpdateTime] = useState(null);
 
@@ -36,57 +35,52 @@ const SecurePage = () => {
 
   return (
     <ProjectContextProvider>
-      <Router>
-        <DropdownContextProvider>
-          <Header update={updateTime} />
-        </DropdownContextProvider>
-        <Switch>
-          <Route exact path={path}>
-            <Redirect to={`${path}/dashboard`} />
-          </Route>
-          <Route
-            path={`${path}/dashboard`}
-            render={(props) => <Dashboard {...props} update={updateTime} />}
-          />
-          <Route
-            path={`${path}/project/:id`}
-            render={(props) => (
-              <ProjectDashboard {...props} update={updateTime} />
-            )}
-          />
-          <Route path={`${path}/board/:id`} component={Board} />
-        </Switch>
-        {modalPage && (
-          <>
-            {modalPage.name === "addboard" && (
-              <AddBoard
-                added={(e) => updatePage(e)}
-                closed={() => setModalPage(null)}
-              />
-            )}
-            {modalPage.name === "editboard" && (
-              <EditBoard
-                board={modalPage.data}
-                edited={(e) => updatePage(e)}
-                closed={() => setModalPage(null)}
-              />
-            )}
-            {modalPage.name === "addproject" && (
-              <AddProject
-                added={(e) => updatePage(e)}
-                closed={() => setModalPage(null)}
-              />
-            )}
-            {modalPage.name === "editproject" && (
-              <EditProject
-                project={modalPage.data}
-                added={(e) => updatePage(e)}
-                closed={() => setModalPage(null)}
-              />
-            )}
-          </>
-        )}
-      </Router>
+      <DropdownContextProvider>
+        <Header update={updateTime} />
+      </DropdownContextProvider>
+      <Routes>
+        {/* base routes for the secure area (uses absolute paths for v6) */}
+        <Route path="/s" element={<Navigate to="/s/dashboard" replace />} />
+        <Route
+          path="/s/dashboard"
+          element={<Dashboard update={updateTime} />}
+        />
+        <Route
+          path="/s/project/:id"
+          element={<ProjectDashboard update={updateTime} />}
+        />
+        <Route path="/s/board/:id" element={<Board />} />
+      </Routes>
+      {modalPage && (
+        <>
+          {modalPage.name === "addboard" && (
+            <AddBoard
+              added={(e) => updatePage(e)}
+              closed={() => setModalPage(null)}
+            />
+          )}
+          {modalPage.name === "editboard" && (
+            <EditBoard
+              board={modalPage.data}
+              edited={(e) => updatePage(e)}
+              closed={() => setModalPage(null)}
+            />
+          )}
+          {modalPage.name === "addproject" && (
+            <AddProject
+              added={(e) => updatePage(e)}
+              closed={() => setModalPage(null)}
+            />
+          )}
+          {modalPage.name === "editproject" && (
+            <EditProject
+              project={modalPage.data}
+              added={(e) => updatePage(e)}
+              closed={() => setModalPage(null)}
+            />
+          )}
+        </>
+      )}
     </ProjectContextProvider>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import { ProjectContext } from "@/context/Project";
 
@@ -38,7 +38,7 @@ export const Dashboard = ({ update }) => {
                 selected={(e) => setProject(e)}
               />
             ) : (
-              <Redirect to={`/s/project/${currentProject.id}`} />
+              <Navigate to={`/s/project/${currentProject.id}`} replace />
             )}
           </div>
           <div>

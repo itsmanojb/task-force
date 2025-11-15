@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
-import { withRouter, Link, Redirect } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
-import { firebaseApp, db } from "@/firebase/init";
+import { app as firebaseApp, db } from "@/firebase/init";
 import { AuthContext } from "@/context/Auth";
 import { ToastsContext } from "@/context/Toasts";
 
 import Image from "@/assets/login-bg.png";
 
-const SignUp = ({ history }) => {
+const SignUp = () => {
   useEffect(() => {
     document.title = "Sign Up - TaskForce";
   }, []);
@@ -66,7 +66,7 @@ const SignUp = ({ history }) => {
                 icon: "checkmark-circle",
               },
             ]);
-            history.push("/s");
+            navigate("/s");
           } catch (error) {
             handleError("Profile cannot be created. Sorry.");
           }
@@ -93,7 +93,7 @@ const SignUp = ({ history }) => {
   };
 
   if (currentUser) {
-    return <Redirect to="/s" />;
+    return <Navigate to="/s" replace />;
   }
 
   return (
@@ -122,7 +122,8 @@ const SignUp = ({ history }) => {
               <label
                 htmlFor="name"
                 className="floating__label"
-                data-content="Name">
+                data-content="Name"
+              >
                 <span className="hidden--visually">Name</span>
               </label>
             </div>
@@ -142,7 +143,8 @@ const SignUp = ({ history }) => {
               <label
                 htmlFor="email"
                 className="floating__label"
-                data-content="Email address">
+                data-content="Email address"
+              >
                 <span className="hidden--visually">Email address</span>
               </label>
             </div>
@@ -161,7 +163,8 @@ const SignUp = ({ history }) => {
               <label
                 htmlFor="password"
                 className="floating__label"
-                data-content="Password">
+                data-content="Password"
+              >
                 <span className="hidden--visually">Password</span>
               </label>
             </div>
@@ -171,7 +174,8 @@ const SignUp = ({ history }) => {
                 type="submit"
                 className="button"
                 disabled={formSubmitted}
-                onClick={(e) => handleSignUp(e)}>
+                onClick={(e) => handleSignUp(e)}
+              >
                 {" "}
                 {formSubmitted ? "Signing Up..." : "Sign Up"}
               </button>
@@ -189,4 +193,4 @@ const SignUp = ({ history }) => {
   );
 };
 
-export default withRouter(SignUp);
+export default SignUp;

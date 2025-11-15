@@ -1,4 +1,5 @@
-import { firestore } from "firebase/app";
+import firebase from "firebase/app";
+import "firebase/firestore";
 import { db } from "@/firebase/init";
 
 export const getProjects = async (email) => {
@@ -90,10 +91,11 @@ export const getBoards = async (email, id) => {
  */
 export const addBoard = async (board) => {
   try {
-    const docId = (await db.collection("boards").add(board)).id;
-    const project = db.collection("projects").doc(board.projectId);
-    await project.update({
-      boards: firestore.FieldValue.arrayUnion(docId),
+    const docRef = await db.collection("boards").add(board);
+    const docId = docRef.id;
+    const projectRef = db.collection("projects").doc(board.projectId);
+    await projectRef.update({
+      boards: firebase.firestore.FieldValue.arrayUnion(docId),
     });
     return true;
   } catch (error) {

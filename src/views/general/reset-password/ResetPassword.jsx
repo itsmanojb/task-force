@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
-import { withRouter, Link, Redirect } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
-import { firebaseApp } from "@/firebase/init";
+import { app as firebaseApp } from "@/firebase/init";
 import { AuthContext } from "@/context/Auth";
 import { ToastsContext } from "@/context/Toasts";
 
 import Image from "@/assets/login-bg.png";
 
-const ResetPassword = ({ history }) => {
+const ResetPassword = () => {
   useEffect(() => {
     document.title = "Reset Password - TaskForce";
   }, []);
@@ -70,7 +70,7 @@ const ResetPassword = ({ history }) => {
   };
 
   if (currentUser) {
-    return <Redirect to="/dashboard" />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return (
@@ -125,4 +125,4 @@ const ResetPassword = ({ history }) => {
   );
 };
 
-export default withRouter(ResetPassword);
+export default ResetPassword;

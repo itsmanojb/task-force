@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { AuthContextProvider } from "./context/Auth";
 import { ToastsContextProvider } from "./context/Toasts";
@@ -21,14 +21,21 @@ function App() {
       <ToastsContextProvider>
         <AuthContextProvider>
           <Router>
-            <Switch>
-              <Route path="/" exact component={Home} />
-              <PrivateRoute path="/s" component={SecurePage} />
-              <Route path="/signup" component={SignUp} />
-              <Route path="/login" component={Login} />
-              <Route path="/reset-password" component={ResetPassword} />
-              <Route exact path="*" component={Home} />
-            </Switch>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/s/*"
+                element={
+                  <PrivateRoute>
+                    <SecurePage />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="*" element={<Home />} />
+            </Routes>
             <Toast position="bottom-right" />
           </Router>
         </AuthContextProvider>

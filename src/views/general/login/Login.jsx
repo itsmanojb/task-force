@@ -1,16 +1,18 @@
 import React, { useEffect, useState, useContext } from "react";
-import { withRouter, Redirect, Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
-import { firebaseApp } from "@/firebase/init";
+import { app as firebaseApp } from "@/firebase/init";
 import { AuthContext } from "@/context/Auth";
 import { ToastsContext } from "@/context/Toasts";
 
 import Image from "@/assets/login-bg.png";
 
-const Login = ({ history }) => {
+const Login = () => {
   useEffect(() => {
     document.title = "Login - TaskForce";
   }, []);
+
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +41,7 @@ const Login = ({ history }) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        history.push("/s");
+        navigate("/s");
       })
       .catch((err) => {
         setFormSubmitted(false);
@@ -63,7 +65,7 @@ const Login = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
 
   if (currentUser) {
-    return <Redirect to="/s" />;
+    return <Navigate to="/s" replace />;
   }
 
   return (
@@ -142,4 +144,4 @@ const Login = ({ history }) => {
   );
 };
 
-export default withRouter(Login);
+export default Login;

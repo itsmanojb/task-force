@@ -1,14 +1,14 @@
-/* eslint-disable 
-jsx-a11y/anchor-is-valid, 
+/* eslint-disable
+jsx-a11y/anchor-is-valid,
 no-lone-blocks,
-no-unused-vars 
+no-unused-vars
 */
 
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, Link } from "react-router-dom";
 import * as shortid from "shortid";
 
-import { firebaseApp } from "@/firebase/init";
+import { app as firebaseApp } from "@/firebase/init";
 import { ToastsContext } from "@/context/Toasts";
 import { ModalPageContext } from "@/context/ModalPage";
 
@@ -19,6 +19,7 @@ import { AddColumn } from "@/components/cards/AddColumn";
 import ColumnHead from "@/components/cards/ColumnHead";
 import BoardMembers from "@/components/members/BoardMembers";
 import confirmService from "@/components/confirm/ConfirmService";
+import { createConfirm } from "@/components/confirm/ConfirmPortal";
 import Icon from "@/components/misc/IonIcon";
 
 import { createDeepCopy } from "@/utils/utility";
@@ -50,6 +51,7 @@ async function getAllColumns(id, setColumns) {
 
 export const Board = ({ history }) => {
   const { id } = useParams();
+  const confirm = createConfirm();
 
   const [loading, setLoading] = useState(true);
   const [board, setBoard] = useState({});
@@ -219,10 +221,10 @@ export const Board = ({ history }) => {
       const val1 = await updateColumn(newColumn.id, newColumn);
       if (val && val1) {
         const newCols = columns.filter(
-          (col) => col.id !== oldColumn.id && col.id !== newColumn.id
+          (col) => col.id !== oldColumn.id && col.id !== newColumn.id,
         );
         const sortedCols = [...newCols, oldColumn, newColumn].sort(
-          (a, b) => a.created - b.created
+          (a, b) => a.created - b.created,
         );
         setColumns(sortedCols);
       }
@@ -297,16 +299,20 @@ export const Board = ({ history }) => {
       showError("Modification on archived project is not allowed");
       return;
     }
-    const result = await confirmService.show(
+    // const result = await confirmService.show(
+    //   "Are you sure you want to delete the board?",
+    //   "Confirm!"
+    // );
+    const result = await confirm(
       "Are you sure you want to delete the board?",
-      "Confirm!"
+      "Confirm!",
     );
     if (result) {
       setLoading(true);
       await Promise.all(
         columns.map(async (c) => {
           await deleteColumn(c.id);
-        })
+        }),
       );
       const val = await deleteBoard(board.id);
       if (val) {
@@ -316,9 +322,13 @@ export const Board = ({ history }) => {
   }
 
   async function handleLogout() {
-    const result = await confirmService.show(
+    // const result = await confirmService.show(
+    //   "Are you sure you want to log out?",
+    //   "Confirm!"
+    // );
+    const result = await confirm(
       "Are you sure you want to log out?",
-      "Confirm!"
+      "Confirm!",
     );
     if (result) {
       await firebaseApp.auth().signOut();
@@ -356,7 +366,8 @@ export const Board = ({ history }) => {
             <a
               className="nav-link"
               title="Dashboard"
-              onClick={(e) => goToDashboard()}>
+              onClick={(e) => goToDashboard()}
+            >
               <Icon name="layers-outline" />
             </a>
           </li>
@@ -364,7 +375,8 @@ export const Board = ({ history }) => {
             <Link
               className="nav-link"
               title="Project Boards"
-              to={`/s/project/${board.projectId}`}>
+              to={`/s/project/${board.projectId}`}
+            >
               <Icon name="folder-outline" />
             </Link>
           </li>
@@ -372,7 +384,8 @@ export const Board = ({ history }) => {
             <a
               title="Members"
               className={boardExtended ? "nav-link active" : "nav-link"}
-              onClick={(e) => setBoardExtended(!boardExtended)}>
+              onClick={(e) => setBoardExtended(!boardExtended)}
+            >
               <Icon name="people-outline" />
             </a>
           </li>
@@ -380,7 +393,8 @@ export const Board = ({ history }) => {
             <a
               className="nav-link"
               title="Edit Board"
-              onClick={handleBoardEdit}>
+              onClick={handleBoardEdit}
+            >
               <Icon name="create-outline" />
             </a>
           </li>
@@ -388,7 +402,8 @@ export const Board = ({ history }) => {
             <a
               className="nav-link"
               title="Delete Board"
-              onClick={handleBoardDelete}>
+              onClick={handleBoardDelete}
+            >
               <Icon name="trash-outline" />
             </a>
           </li>
@@ -406,7 +421,8 @@ export const Board = ({ history }) => {
     <>
       {loading && <LineLoader />}
       <main
-        className={boardExtended ? "board-content extended" : "board-content"}>
+        className={boardExtended ? "board-content extended" : "board-content"}
+      >
         <div>
           <SideNav />
         </div>
@@ -417,7 +433,8 @@ export const Board = ({ history }) => {
           ) : (
             <div
               className="trello-board"
-              style={{ paddingTop: project.archived ? "0" : "40px" }}>
+              style={{ paddingTop: project.archived ? "0" : "40px" }}
+            >
               {project.archived && (
                 <div className="archive-alert">
                   Project has been archived. You can only view this project.
@@ -436,7 +453,8 @@ export const Board = ({ history }) => {
                       onDragOver={(e) => e.preventDefault()}
                       onDrop={(e) => {
                         onDragDrop(e, column);
-                      }}>
+                      }}
+                    >
                       <div className="column__title--wrapper">
                         <ColumnHead
                           name={column.name}
@@ -447,7 +465,8 @@ export const Board = ({ history }) => {
                         {!project.archived && (
                           <span
                             className="btn"
-                            onClick={(e) => handleDeleteColumn(column)}>
+                            onClick={(e) => handleDeleteColumn(column)}
+                          >
                             <Icon name="trash-outline" />
                           </span>
                         )}
@@ -470,13 +489,14 @@ export const Board = ({ history }) => {
                                 column={column}
                                 archived={project.archived}
                               />
-                            )
+                            ),
                         )}
                       </ul>
                       {!project.archived && (
                         <div
                           className="column__item--cta"
-                          onClick={() => openAddCard(column)}>
+                          onClick={() => openAddCard(column)}
+                        >
                           <Icon name="add"></Icon>
                           <span>Add a card</span>
                         </div>
@@ -534,7 +554,7 @@ export const Board = ({ history }) => {
           onKeyPress={keyPressed}
           autoComplete="off"
         />
-        <span>save</span> 
+        <span>save</span>
       </div>
       : <div className="no-edit">
         <h2 onDoubleClick={() => setBoardNameEdit(true)}>{boardName}</h2>

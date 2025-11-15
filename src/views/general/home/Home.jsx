@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import { withRouter, Redirect, NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 
-import { ReactComponent as Logo } from "@/assets/icons/logo.svg";
+import Logo from "@/assets/icons/logo.svg";
 import { AuthContext } from "@/context/Auth";
 import "./Home.css";
 
@@ -9,14 +9,14 @@ const Home = () => {
   const { currentUser } = useContext(AuthContext);
 
   if (currentUser) {
-    return <Redirect to="/s" />;
+    return <Navigate to="/s" replace />;
   }
 
   return (
     <section>
       <nav>
         <div className="brand">
-          <Logo /> Task Force
+          <img src={Logo} alt="logo" /> Task Force
         </div>
         <div className="links">
           <NavLink to="/login" className="button inline trans">
@@ -43,4 +43,4 @@ const Home = () => {
   );
 };
 
-export default withRouter(Home);
+export default Home;

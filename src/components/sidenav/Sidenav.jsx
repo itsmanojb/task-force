@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid,
 no-unused-vars */
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { firebaseApp } from "@/firebase/init";
+import { app as firebaseApp } from "@/firebase/init";
 import { getProject, updateProject, archiveProject } from "@/utils/data";
-import confirmService from "@/components/confirm/ConfirmService";
+// import confirmService from "@/components/confirm/ConfirmService";
+import { createConfirm } from "@/components/confirm/ConfirmPortal";
 import { ProjectContext } from "@/context/Project";
 import { ModalPageContext } from "@/context/ModalPage";
 import { ToastsContext } from "@/context/Toasts";
@@ -13,15 +14,21 @@ import Icon from "@/components/misc/IonIcon";
 import "./Sidenav.css";
 
 const SideNav = ({ target, extended, setExtended, navigate }) => {
-  const history = useHistory();
+  const navigateTo = useNavigate();
   const [currentProject, setCurrentProject] = useContext(ProjectContext);
   const [modalPage, setModalPage] = useContext(ModalPageContext);
   const [toasts, setToasts] = useContext(ToastsContext);
 
+  const confirm = createConfirm();
+
   async function handleLogout() {
-    const result = await confirmService.show(
+    // const result = await confirmService.show(
+    //   "Are you sure you want to log out?",
+    //   "Confirm!"
+    // );
+    const result = await confirm(
       "Are you sure you want to log out?",
-      "Confirm!"
+      "Confirm!",
     );
     if (result) {
       await firebaseApp.auth().signOut();
@@ -29,9 +36,13 @@ const SideNav = ({ target, extended, setExtended, navigate }) => {
   }
 
   async function doArchive() {
-    const result = await confirmService.show(
+    // const result = await confirmService.show(
+    //   "If you archive this project, you'll not be able to create or modify any boards or tasks for this project. Are you sure?",
+    //   "Please Note!",
+    // );
+    const result = await confirm(
       "If you archive this project, you'll not be able to create or modify any boards or tasks for this project. Are you sure?",
-      "Please Note!"
+      "Please Note!",
     );
     if (result) {
       const archived = await archiveProject(currentProject.id);
@@ -49,7 +60,7 @@ const SideNav = ({ target, extended, setExtended, navigate }) => {
       ]);
       localStorage.removeItem("currentProject");
       setCurrentProject(null);
-      history.push(`/s`);
+      navigateTo(`/s`);
     }
   }
 
@@ -104,7 +115,8 @@ const SideNav = ({ target, extended, setExtended, navigate }) => {
               <a
                 className="nav-link"
                 title="All Projects"
-                onClick={(e) => navigate("dash")}>
+                onClick={(e) => navigate("dash")}
+              >
                 <Icon name="layers-outline" />
               </a>
             </li>
@@ -112,25 +124,29 @@ const SideNav = ({ target, extended, setExtended, navigate }) => {
               <a
                 className={extended ? "nav-link active" : "nav-link"}
                 title="Members"
-                onClick={(e) => setExtended(!extended)}>
+                onClick={(e) => setExtended(!extended)}
+              >
                 <Icon name="people-outline" />
               </a>
             </li>
             <li
               className={
                 currentProject.archived ? "nav-item disabled" : "nav-item"
-              }>
+              }
+            >
               <a
                 className="nav-link"
                 title="Mask as Favorite"
-                onClick={markAsFavorite}>
+                onClick={markAsFavorite}
+              >
                 <Icon name={currentProject.pinned ? "star" : "star-outline"} />
               </a>
             </li>
             <li
               className={
                 currentProject.archived ? "nav-item disabled" : "nav-item"
-              }>
+              }
+            >
               <a className="nav-link" title="Edit Project" onClick={doEdit}>
                 <Icon name="create-outline" />
               </a>
@@ -138,11 +154,13 @@ const SideNav = ({ target, extended, setExtended, navigate }) => {
             <li
               className={
                 currentProject.archived ? "nav-item disabled" : "nav-item"
-              }>
+              }
+            >
               <a
                 className="nav-link"
                 title="Archive Project"
-                onClick={doArchive}>
+                onClick={doArchive}
+              >
                 <Icon name="archive-outline" />
               </a>
             </li>

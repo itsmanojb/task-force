@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 import { AuthContext } from "@/context/Auth";
 import { ProjectContext } from "@/context/Project";
@@ -110,7 +110,7 @@ export const ProjectDashboard = ({ update, history }) => {
   };
 
   if (!currentProject) {
-    return <Redirect to="/s" />;
+    return <Navigate to="/s" replace />;
   } else {
     return (
       <>
