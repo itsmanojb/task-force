@@ -11,6 +11,7 @@ import * as shortid from "shortid";
 import { app as firebaseApp } from "@/firebase/init";
 import { ToastsContext } from "@/context/Toasts";
 import { ModalPageContext } from "@/context/ModalPage";
+import { useConfirm } from "@/context/ConfirmContext";
 
 import { LineLoader } from "@/common/loader/LineLoader";
 import { Card } from "@/components/cards/Card";
@@ -18,8 +19,6 @@ import { AddCard } from "@/components/cards/AddCard";
 import { AddColumn } from "@/components/cards/AddColumn";
 import ColumnHead from "@/components/cards/ColumnHead";
 import BoardMembers from "@/components/members/BoardMembers";
-import confirmService from "@/components/confirm/ConfirmService";
-import { createConfirm } from "@/components/confirm/ConfirmPortal";
 import Icon from "@/components/misc/IonIcon";
 
 import { createDeepCopy } from "@/utils/utility";
@@ -51,7 +50,7 @@ async function getAllColumns(id, setColumns) {
 
 export const Board = ({ history }) => {
   const { id } = useParams();
-  const confirm = createConfirm();
+  const confirm = useConfirm();
 
   const [loading, setLoading] = useState(true);
   const [board, setBoard] = useState({});
@@ -299,15 +298,11 @@ export const Board = ({ history }) => {
       showError("Modification on archived project is not allowed");
       return;
     }
-    // const result = await confirmService.show(
-    //   "Are you sure you want to delete the board?",
-    //   "Confirm!"
-    // );
-    const result = await confirm(
+    const ok = await confirm(
       "Are you sure you want to delete the board?",
       "Confirm!",
     );
-    if (result) {
+    if (ok) {
       setLoading(true);
       await Promise.all(
         columns.map(async (c) => {
@@ -322,15 +317,8 @@ export const Board = ({ history }) => {
   }
 
   async function handleLogout() {
-    // const result = await confirmService.show(
-    //   "Are you sure you want to log out?",
-    //   "Confirm!"
-    // );
-    const result = await confirm(
-      "Are you sure you want to log out?",
-      "Confirm!",
-    );
-    if (result) {
+    const ok = await confirm("Are you sure you want to log out?", "Confirm!");
+    if (ok) {
       await firebaseApp.auth().signOut();
     }
   }
@@ -471,7 +459,7 @@ export const Board = ({ history }) => {
                           </span>
                         )}
                       </div>
-                      <ul className="card__list">
+                      <ul className="card__list scroll-box">
                         {column.cards.map(
                           (card) =>
                             !card.isArchive && (

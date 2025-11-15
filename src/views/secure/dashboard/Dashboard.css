@@ -148,13 +148,13 @@ main.content {
                 flex-direction: column;
                 transition: all 0.3s ease;
 
-                &-name {
+                .board-name {
                     font-size: 16px;
                     font-weight: 500;
                     color: #888;
                 }
 
-                &-type {
+                .board-type {
                     span {
                         font-size: 15px;
                         /*color: var(--color-accent);*/
@@ -166,7 +166,7 @@ main.content {
                     }
                 }
 
-                &-desc {
+                .board-desc {
                     display: flex;
                     align-items: center;
 
@@ -175,17 +175,16 @@ main.content {
                         font-size: 14px;
                         line-height: 1;
                         color: #888;
-
-                        & + p {
-                            &::before {
-                                content: "\00B7";
-                                margin: 0 10px;
-                            }
+                    }
+                    p + p {
+                        &::before {
+                            content: "\00B7";
+                            margin: 0 10px;
                         }
                     }
                 }
 
-                &-members {
+                .board-members {
                     display: flex;
 
                     li {
@@ -202,19 +201,19 @@ main.content {
                         border: 2px solid #fff;
                         transition: all 0.3s ease;
 
-                        & + li {
-                            margin-left: -5px;
-                        }
-
                         &:hover {
                             z-index: 1;
                             color: #fff;
                             background: var(--color-accent);
                         }
                     }
+
+                    li + li {
+                        margin-left: -5px;
+                    }
                 }
 
-                &-footer {
+                .board-footer {
                     display: grid;
                     grid-template-columns: 150px 100px;
                     align-items: center;
@@ -284,14 +283,14 @@ main.content {
                 transition: all 0.3s ease;
                 justify-content: space-between;
 
-                &-name {
+                .board-name {
                     font-size: 20px;
                     font-weight: 600;
                     margin: 4px 0 0;
                     color: #888;
                 }
 
-                &-type {
+                .board-type {
                     span {
                         font-weight: 500;
                         margin: 2px 0;
@@ -304,7 +303,7 @@ main.content {
                     }
                 }
 
-                &-desc {
+                .board-desc {
                     display: block;
                     padding: 16px 0;
 
@@ -324,13 +323,13 @@ main.content {
                     }
                 }
 
-                &-footer {
+                .board-footer {
                     display: grid;
                     grid-auto-columns: 1fr;
                     width: 100%;
                 }
 
-                &-members {
+                .board-members {
                     display: flex;
                     margin: 10px 0 15px -2px;
 

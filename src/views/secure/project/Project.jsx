@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import { AuthContext } from "@/context/Auth";
 import { ProjectContext } from "@/context/Project";
@@ -13,7 +13,8 @@ import BoardMembers from "@/components/members/BoardMembers";
 import { Team } from "@/components/misc/Team";
 import Icon from "@/components/misc/IonIcon";
 
-export const ProjectDashboard = ({ update, history }) => {
+export const ProjectDashboard = ({ update }) => {
+  const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
   const [currentProject, setCurrentProject] = useContext(ProjectContext);
   const [gridView, setGridView] = useState(!localStorage.getItem("listView"));
@@ -43,7 +44,7 @@ export const ProjectDashboard = ({ update, history }) => {
     if (e === "dash") {
       setCurrentProject(null);
       localStorage.removeItem("currentProject");
-      history.push(`/s/dashboard`);
+      navigate(`/s/dashboard`);
     }
   };
 
@@ -56,22 +57,22 @@ export const ProjectDashboard = ({ update, history }) => {
       if (value.substr(1) === "name") {
         if (value.charAt(0) === "-") {
           tempBoards.sort((a, b) =>
-            a.name > b.name ? -1 : a.name < b.name ? 1 : 0
+            a.name > b.name ? -1 : a.name < b.name ? 1 : 0,
           );
         } else {
           tempBoards.sort((a, b) =>
-            a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+            a.name < b.name ? -1 : a.name > b.name ? 1 : 0,
           );
         }
       }
       if (value.substr(1) === "created") {
         if (value.charAt(0) === "-") {
           tempBoards.sort((a, b) =>
-            a.createdOn < b.createdOn ? -1 : a.createdOn > b.createdOn ? 1 : 0
+            a.createdOn < b.createdOn ? -1 : a.createdOn > b.createdOn ? 1 : 0,
           );
         } else {
           tempBoards.sort((a, b) =>
-            a.createdOn > b.createdOn ? -1 : a.createdOn < b.createdOn ? 1 : 0
+            a.createdOn > b.createdOn ? -1 : a.createdOn < b.createdOn ? 1 : 0,
           );
         }
       }
@@ -81,16 +82,16 @@ export const ProjectDashboard = ({ update, history }) => {
             a.teamMembers.length < b.teamMembers.length
               ? -1
               : a.teamMembers.length > b.teamMembers.length
-              ? 1
-              : 0
+                ? 1
+                : 0,
           );
         } else {
           tempBoards.sort((a, b) =>
             a.teamMembers.length > b.teamMembers.length
               ? -1
               : a.teamMembers.length < b.teamMembers.length
-              ? 1
-              : 0
+                ? 1
+                : 0,
           );
         }
       }
@@ -154,12 +155,14 @@ export const ProjectDashboard = ({ update, history }) => {
                           <div className="view-buttons">
                             <button
                               onClick={(e) => setView("grid")}
-                              className={gridView ? "active" : ""}>
+                              className={gridView ? "active" : ""}
+                            >
                               <Icon name="grid-outline" />
                             </button>
                             <button
                               onClick={(e) => setView("list")}
-                              className={gridView ? "" : "active"}>
+                              className={gridView ? "" : "active"}
+                            >
                               <Icon name="list-outline" />
                             </button>
                           </div>
@@ -171,7 +174,8 @@ export const ProjectDashboard = ({ update, history }) => {
                               <select
                                 id="sortMenu"
                                 value={sortOrder}
-                                onChange={onSortOrderChange}>
+                                onChange={onSortOrderChange}
+                              >
                                 <option value="auto">Automatic</option>
                                 <option value="+created">Latest first</option>
                                 <option value="-created">Oldest first</option>
@@ -191,17 +195,17 @@ export const ProjectDashboard = ({ update, history }) => {
                       <div
                         className={
                           gridView ? "boards-listing grid" : "boards-listing"
-                        }>
+                        }
+                      >
                         <div className="boards">
                           {boards.map((board) => {
                             return (
                               <Link
-                                to={{
-                                  pathname: `/s/board/${board.id}`,
-                                  state: { boardName: board.name },
-                                }}
+                                to={`/s/board/${board.id}`}
+                                state={{ boardName: board.name }}
                                 key={board.id}
-                                className="board">
+                                className="board"
+                              >
                                 <div className="board-name">{board.name}</div>
                                 <div className="board-type">
                                   <span>{board.type}</span>

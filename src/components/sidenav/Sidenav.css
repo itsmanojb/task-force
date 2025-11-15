@@ -7,17 +7,18 @@
     --bg-primary: #fff;
     --bg-secondary: #f6f7f8;
     --transition-speed: 600ms;
-    --sidenav-top-offset: 10px;
+    --sidenav-top-offset: 0;
 }
 
 .sidenav {
     position: fixed;
     background-color: var(--bg-primary);
     transition: width 600ms ease;
-    overflow: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
     top: var(--nav-size);
     width: var(--sidenav-size);
-    height: calc(100vh - (var(--nav-size) + var(--sidenav-top-offset)));
+    height: calc(100dvh - var(--nav-size));
 }
 
 .sidenav-nav {
@@ -32,7 +33,7 @@
     .nav-item {
         width: 100%;
 
-        & + .nav-item {
+        .nav-item + .nav-item {
             margin-top: 10px;
         }
 

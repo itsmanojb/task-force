@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { app as firebaseApp } from "@/firebase/init";
 import { getProject, updateProject, archiveProject } from "@/utils/data";
-// import confirmService from "@/components/confirm/ConfirmService";
-import { createConfirm } from "@/components/confirm/ConfirmPortal";
+import { useConfirm } from "@/context/ConfirmContext";
 import { ProjectContext } from "@/context/Project";
 import { ModalPageContext } from "@/context/ModalPage";
 import { ToastsContext } from "@/context/Toasts";
@@ -19,32 +18,21 @@ const SideNav = ({ target, extended, setExtended, navigate }) => {
   const [modalPage, setModalPage] = useContext(ModalPageContext);
   const [toasts, setToasts] = useContext(ToastsContext);
 
-  const confirm = createConfirm();
+  const confirm = useConfirm();
 
   async function handleLogout() {
-    // const result = await confirmService.show(
-    //   "Are you sure you want to log out?",
-    //   "Confirm!"
-    // );
-    const result = await confirm(
-      "Are you sure you want to log out?",
-      "Confirm!",
-    );
-    if (result) {
+    const ok = await confirm("Are you sure you want to log out?", "Confirm!");
+    if (ok) {
       await firebaseApp.auth().signOut();
     }
   }
 
   async function doArchive() {
-    // const result = await confirmService.show(
-    //   "If you archive this project, you'll not be able to create or modify any boards or tasks for this project. Are you sure?",
-    //   "Please Note!",
-    // );
-    const result = await confirm(
+    const ok = await confirm(
       "If you archive this project, you'll not be able to create or modify any boards or tasks for this project. Are you sure?",
       "Please Note!",
     );
-    if (result) {
+    if (ok) {
       const archived = await archiveProject(currentProject.id);
       setToasts([
         ...toasts,

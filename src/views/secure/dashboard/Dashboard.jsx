@@ -25,27 +25,20 @@ export const Dashboard = ({ update }) => {
   };
 
   return (
-    <>
-      <main className="content">
-        <div className="dashboard">
-          <div>
-            <SideNav target="main" />
-          </div>
-          <div className="all-boards">
-            {!currentProject ? (
-              <ProjectSelector
-                update={update}
-                selected={(e) => setProject(e)}
-              />
-            ) : (
-              <Navigate to={`/s/project/${currentProject.id}`} replace />
-            )}
-          </div>
-          <div>
-            <RightPanel update={update} />
-          </div>
-        </div>
+    <div className="dashboard">
+      <aside>
+        <SideNav target="main" />
+      </aside>
+      <main className="all-boards">
+        {!currentProject ? (
+          <ProjectSelector update={update} selected={(e) => setProject(e)} />
+        ) : (
+          <Navigate to={`/s/project/${currentProject.id}`} replace />
+        )}
       </main>
-    </>
+      <aside>
+        <RightPanel update={update} />
+      </aside>
+    </div>
   );
 };

@@ -36,10 +36,10 @@ section {
             a.button {
                 font-size: 13px;
                 padding: 0.8rem 1rem;
+            }
 
-                & + .button {
-                    margin-left: 10px;
-                }
+            a.button + a.button {
+                margin-left: 10px;
             }
         }
     }

@@ -72,37 +72,36 @@
 }
 
 .trello-board {
-    padding: 40px 0 0;
-
+    --pt: 40px;
+    --pb: 20px;
     --column-bg-color: #e8eaec;
     --border-radius: 15px;
-    --column-min-height: 135px;
+    --column-min-height: 130px;
+
+    padding: var(--pt) 0 0;
 
     .column__list {
         display: flex;
+        align-items: flex-start;
         width: 100%;
         overflow-x: auto;
         overflow-y: hidden;
-        max-height: calc(100vh - 72px);
-        min-height: calc(100vh - 72px);
+        height: calc(100dvh - calc(var(--pt) + var(--nav-size) + 2px));
         list-style-type: none;
         margin: 0;
-        padding: 0;
+        padding: 0 0 0.5rem;
     }
 
     .column__item {
         border-radius: var(--border-radius);
         background-color: var(--column-bg-color);
         min-width: calc(350px + 1rem);
-        height: 100%;
-        overflow-y: auto;
-        padding: 0 0.75rem;
         grid-template-rows: 60px 1fr 46px;
-        height: 100%;
+        max-height: 100%;
         min-height: var(--column-min-height);
 
         &:first-of-type {
-            margin-left: 1.5rem;
+            margin-left: 1rem;
         }
 
         &.column__item--new {
@@ -112,13 +111,14 @@
         &.trans {
             background-color: transparent;
             height: var(--column-min-height);
+            margin-inline: 1rem;
         }
 
         &.empty {
             min-height: 0;
         }
 
-        &--input {
+        .column__item--input {
             background: var(--column-bg-color);
             padding: 20px 10px;
             height: 100%;
@@ -138,7 +138,7 @@
             }
         }
 
-        &--new {
+        .column__item--new {
             opacity: 0.8;
             border-radius: var(--border-radius);
             background-color: transparent;
@@ -171,10 +171,11 @@
     }
 
     .column__title--wrapper {
+        border-radius: var(--border-radius);
         background-color: var(--column-bg-color);
         display: grid;
         grid-template-columns: 1fr 30px;
-        padding: 0.5rem 0.25rem;
+        padding: 0.5rem 1rem;
         align-items: center;
         position: sticky;
         top: 0;
@@ -231,7 +232,7 @@
         justify-content: center;
         background-color: #fff;
         border-radius: calc(var(--border-radius) - 2px);
-        margin: 10px 0;
+        margin: 10px 1rem;
         cursor: pointer;
         font-size: 16px;
         /*border: 1px solid #f2f2f2;*/
@@ -246,14 +247,15 @@
         overflow-y: auto;
         max-height: calc(100vh - 266px);
         border-radius: var(--border-radius);
-        padding: 0 0 2px;
+        padding: 0 0 2px 0.75rem;
+        scrollbar-gutter: stable;
     }
 
     .card__item {
         background-color: white;
         border-radius: var(--border-radius);
         box-shadow: 0 1px 0 rgba(9, 45, 66, 0.25);
-        padding: 1rem 0.75rem 1rem 0.75rem;
+        padding: 0.75rem;
         cursor: grab;
 
         & + .card__item {
@@ -271,7 +273,7 @@
         border-radius: 0.5rem;
         font-weight: 700;
         color: white;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.25rem;
         display: inline-block;
         min-width: 50px;
         text-align: center;
@@ -280,28 +282,28 @@
             margin-left: 3px;
         }
 
-        &--green {
+        &.card__tag--green {
             background-color: #61bd4f;
         }
 
-        &--pink {
+        &.card__tag--pink {
             background-color: #fa60d4;
         }
 
-        &--yellow {
+        &.card__tag--yellow {
             background-color: #ffe417;
             color: #333;
         }
 
-        &--orange {
+        &.card__tag--orange {
             background-color: #ff843d;
         }
 
-        &--red {
+        &.card__tag--red {
             background-color: #c52e1a;
         }
 
-        &--blue {
+        &.card__tag--blue {
             background-color: #00c2e0;
         }
     }
@@ -313,8 +315,8 @@
 
     .card__title {
         color: #17394d;
-        margin: 0 0 10px;
-        font-size: 20px;
+        margin: 0 0 4px;
+        font-size: 16px;
         font-weight: 500;
     }
 
