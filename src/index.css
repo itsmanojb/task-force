@@ -33,6 +33,7 @@ a:focus {
 
     --nav-size: 64px;
     --sidenav-size: 64px;
+    --sidepanel-width: 350px;
 }
 
 body {
@@ -62,11 +63,6 @@ button:focus {
 
 .clickable {
     cursor: pointer;
-}
-
-::-webkit-scrollbar {
-    /*width: 0;*/
-    /*height: 0;*/
 }
 
 .login-ui {

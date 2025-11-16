@@ -6,7 +6,7 @@ main.content {
 .dashboard {
     height: 100%;
     display: grid;
-    grid-template-columns: var(--sidenav-size) 1fr 350px;
+    grid-template-columns: var(--sidenav-size) 1fr auto;
     padding: 12px 0 0;
 
     > div:not(.members-panel) {
@@ -17,6 +17,7 @@ main.content {
         height: 100%;
         background-color: #f5f7fa;
         border-radius: 24px 24px 0 0;
+        overflow-y: auto;
 
         .board-header {
             padding: 20px 25px;
@@ -37,11 +38,12 @@ main.content {
     }
 
     &.extended {
-        grid-template-columns: var(--sidenav-size) 150px 1fr 350px;
+        grid-template-columns: var(--sidenav-size) 150px 1fr auto;
     }
 
     .sidebar {
         background-color: #fff;
+        width: var(--sidepanel-width);
     }
 }
 
@@ -72,7 +74,7 @@ main.content {
                 }
 
                 &:hover {
-                    background-color: rgba(#fff, 0.5);
+                    background-color: #fff9;
                     opacity: 0.8;
                 }
 
@@ -82,7 +84,7 @@ main.content {
 
                 &.active {
                     opacity: 1;
-                    background-color: rgba(#fff, 0.7);
+                    background-color: #fffd;
                 }
             }
         }
