@@ -1,6 +1,3 @@
-/* eslint-disable
-jsx-a11y/anchor-is-valid, no-lone-blocks, no-unused-vars */
-
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import shortid from "shortid";
@@ -62,9 +59,8 @@ const ProjectBoard = () => {
   const [selectedColumn, setSelectedColumn] = useState<Column | null>(null);
   const [isAdd, setIsAdd] = useState(true);
   const [inEditCard, setInEditCard] = useState<any>(null);
-  const [boardExtended, setBoardExtended] = useState(false);
 
-  const [_, __, actions] = useAppUI();
+  const [appUI, _, actions] = useAppUI();
   const [project, setProject] = useProject();
   const [toasts, setToasts] = useToasts();
 
@@ -377,8 +373,12 @@ const ProjectBoard = () => {
           <li className="nav-item">
             <a
               title="Members"
-              className={boardExtended ? "nav-link active" : "nav-link"}
-              onClick={(e) => setBoardExtended(!boardExtended)}
+              className={
+                appUI.membersListShown ? "nav-link active" : "nav-link"
+              }
+              onClick={(e) =>
+                actions.setMembersListShown(!appUI.membersListShown)
+              }
             >
               <Icon name="people-outline" />
             </a>
@@ -415,12 +415,16 @@ const ProjectBoard = () => {
     <>
       {loading && <LineLoader />}
       <main
-        className={boardExtended ? "board-content extended" : "board-content"}
+        className={
+          appUI.membersListShown ? "board-content extended" : "board-content"
+        }
       >
         <div>
           <SideNav />
         </div>
-        {boardExtended && <BoardMembers members={board?.teamMembers || []} />}
+        {appUI.membersListShown && (
+          <BoardMembers members={board?.teamMembers || []} />
+        )}
         <div className="scroll">
           {loading ? (
             <div className="inner-loading-text">Loading columns ...</div>

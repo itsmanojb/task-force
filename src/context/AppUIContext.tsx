@@ -5,6 +5,7 @@ import React, {
   ReactNode,
   Dispatch,
   SetStateAction,
+  useEffect,
 } from "react";
 
 export interface AppUIState {
@@ -12,6 +13,10 @@ export interface AppUIState {
   modalData: any;
   sidePanelShown: boolean;
   membersListShown: boolean;
+  projectsLayout: "list" | "grid";
+  boardsLayout: "list" | "grid";
+  boardsSortOrder: string;
+  showArchived: boolean;
 }
 
 export interface AppUIActions {
@@ -19,6 +24,10 @@ export interface AppUIActions {
   closeModal: () => void;
   setSidePanelShown: (shown: boolean) => void;
   setMembersListShown: (shown: boolean) => void;
+  setProjectsLayout: (layout: "list" | "grid") => void;
+  setBoardsLayout: (layout: "list" | "grid") => void;
+  setBoardsSortOrder: (order: string) => void;
+  showArchivedProject: (shown: boolean) => void;
 }
 
 // Tuple value type
@@ -39,12 +48,25 @@ export const AppUIContext = createContext<AppUIContextValue | undefined>(
 export const AppUIContextProvider: React.FC<AppUIContextProviderProps> = ({
   children,
 }) => {
-  const [appUI, setAppUI] = useState<AppUIState>({
-    modal: "",
-    modalData: null,
-    sidePanelShown: false,
-    membersListShown: false,
+  const [appUI, setAppUI] = useState<AppUIState>(() => {
+    const savedState = localStorage.getItem("appUIState");
+    return savedState
+      ? JSON.parse(savedState)
+      : {
+          modal: "",
+          modalData: null,
+          sidePanelShown: false,
+          membersListShown: false,
+          projectsLayout: "grid",
+          boardsLayout: "grid",
+          showArchived: false,
+          boardsSortOrder: "auto",
+        };
   });
+
+  useEffect(() => {
+    localStorage.setItem("appUIState", JSON.stringify(appUI));
+  }, [appUI]);
 
   const actions: AppUIActions = {
     setModal: (modal, modalData = null) =>
@@ -58,6 +80,18 @@ export const AppUIContextProvider: React.FC<AppUIContextProviderProps> = ({
 
     setMembersListShown: (membersListShown) =>
       setAppUI((prev) => ({ ...prev, membersListShown })),
+
+    showArchivedProject: (showArchived) =>
+      setAppUI((prev) => ({ ...prev, showArchived })),
+
+    setProjectsLayout: (layout) =>
+      setAppUI((prev) => ({ ...prev, projectsLayout: layout })),
+
+    setBoardsLayout: (layout) =>
+      setAppUI((prev) => ({ ...prev, boardsLayout: layout })),
+
+    setBoardsSortOrder: (order) =>
+      setAppUI((prev) => ({ ...prev, boardsSortOrder: order })),
   };
 
   return (

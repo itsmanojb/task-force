@@ -16,12 +16,9 @@ const ProjectSelector = ({
 }) => {
   const isMountedRef = useIsMountedRef();
   const { currentUser } = useAuth();
-  const [, , actions] = useAppUI();
+  const [appUI, , actions] = useAppUI();
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<Project[]>([]);
-  const [showArchived, setShowArchived] = useState(
-    localStorage.getItem("showArchive") === "true",
-  );
 
   useEffect(() => {
     (async function () {
@@ -32,11 +29,10 @@ const ProjectSelector = ({
       }
     })();
     // return () => (isMountedRef.current = false);
-  }, [currentUser, isMountedRef, showArchived]);
+  }, [currentUser, isMountedRef]);
 
   const toggleArchive = () => {
-    setShowArchived(!showArchived);
-    localStorage.setItem("showArchive", String(!showArchived));
+    actions.showArchivedProject(!appUI.showArchived);
   };
 
   function addProjectClass(project: Project) {
@@ -59,7 +55,9 @@ const ProjectSelector = ({
         {projects.length ? (
           <div
             className={
-              showArchived ? "recent-projects archived" : "recent-projects"
+              appUI.showArchived
+                ? "recent-projects archived"
+                : "recent-projects"
             }
           >
             <div className="info">
@@ -68,7 +66,7 @@ const ProjectSelector = ({
                 <input
                   type="checkbox"
                   id="archiveToggle"
-                  checked={!!showArchived}
+                  checked={!!appUI.showArchived}
                   onChange={toggleArchive}
                 />{" "}
                 <span>Show archived</span>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
+import { useAppUI } from "@/context/AppUIContext";
 import { useAuth } from "@/context/AuthContext";
 import { useProject } from "@/context/ProjectContext";
 import { getBoards } from "@/utils/data";
@@ -15,16 +16,11 @@ import { Board } from "@/types/model";
 import Icon from "@/components/misc/IonIcon";
 
 export const ProjectDashboard = () => {
-  // const navigate = useNavigate();
   const { currentUser } = useAuth();
   const [currentProject] = useProject();
-  const [boardsLayout, setBoardsLayout] = useState(
-    localStorage.getItem("layout_boards") || "grid",
-  );
+  const [appUI, _, actions] = useAppUI();
   const [loading, setLoading] = useState(true);
   const [boards, setBoards] = useState<Board[]>([]);
-  const [projectExtended, setProjectExtended] = useState(false);
-  const [sortOrder, setSortOrder] = useState("auto");
 
   useEffect(() => {
     if (currentProject) {
@@ -52,11 +48,15 @@ export const ProjectDashboard = () => {
 
   function onSortOrderChange(e: any) {
     const value = e.target.value;
-    setSortOrder(value);
+    actions.setBoardsSortOrder(value);
+    sortBoards(value);
+  }
+
+  function sortBoards(value: string) {
     const tempBoards = [...boards];
 
     if (value !== "auto") {
-      if (value.substr(1) === "name") {
+      if (value.slice(1) === "name") {
         if (value.charAt(0) === "-") {
           tempBoards.sort((a, b) =>
             a.name > b.name ? -1 : a.name < b.name ? 1 : 0,
@@ -67,7 +67,7 @@ export const ProjectDashboard = () => {
           );
         }
       }
-      if (value.substr(1) === "created") {
+      if (value.slice(1) === "created") {
         if (value.charAt(0) === "-") {
           tempBoards.sort((a, b) =>
             a.createdOn < b.createdOn ? -1 : a.createdOn > b.createdOn ? 1 : 0,
@@ -78,7 +78,7 @@ export const ProjectDashboard = () => {
           );
         }
       }
-      if (value.substr(1) === "members") {
+      if (value.slice(1) === "members") {
         if (value.charAt(0) === "-") {
           tempBoards.sort((a, b) =>
             a.teamMembers.length < b.teamMembers.length
@@ -103,11 +103,6 @@ export const ProjectDashboard = () => {
     setBoards(tempBoards);
   }
 
-  const setLayout = (layout: "list" | "grid") => {
-    localStorage.setItem("layout_boards", layout);
-    setBoardsLayout(layout);
-  };
-
   if (!currentProject) {
     return <Navigate to="/s" replace />;
   } else {
@@ -115,11 +110,15 @@ export const ProjectDashboard = () => {
       <>
         {loading && <LineLoader />}
         <main className="content">
-          <div className={projectExtended ? "dashboard extended" : "dashboard"}>
+          <div
+            className={
+              appUI.membersListShown ? "dashboard extended" : "dashboard"
+            }
+          >
             <div>
               <SideNav target="project" />
             </div>
-            {projectExtended && (
+            {appUI.membersListShown && (
               <BoardMembers
                 klass="project-members"
                 members={currentProject.members}
@@ -146,17 +145,17 @@ export const ProjectDashboard = () => {
                         <div className="menubar">
                           <div className="view-buttons">
                             <button
-                              onClick={(e) => setLayout("grid")}
+                              onClick={(e) => actions.setBoardsLayout("grid")}
                               className={
-                                boardsLayout === "grid" ? "active" : ""
+                                appUI.boardsLayout === "grid" ? "active" : ""
                               }
                             >
                               <Icon name="grid-outline" />
                             </button>
                             <button
-                              onClick={(e) => setLayout("list")}
+                              onClick={(e) => actions.setBoardsLayout("list")}
                               className={
-                                boardsLayout === "list" ? "active" : ""
+                                appUI.boardsLayout === "list" ? "active" : ""
                               }
                             >
                               <Icon name="list-outline" />
@@ -169,7 +168,7 @@ export const ProjectDashboard = () => {
                               </label>
                               <select
                                 id="sortMenu"
-                                value={sortOrder}
+                                value={appUI.boardsSortOrder}
                                 onChange={onSortOrderChange}
                               >
                                 <option value="auto">Automatic</option>
@@ -190,7 +189,7 @@ export const ProjectDashboard = () => {
                       </div>
                       <div
                         className={
-                          boardsLayout === "grid"
+                          appUI.boardsLayout === "grid"
                             ? "boards-listing grid"
                             : "boards-listing"
                         }
@@ -240,11 +239,16 @@ export const ProjectDashboard = () => {
                 <div className="inner-loading-text">Loading boards ...</div>
               )}
             </div>
-            <div>
-              {currentProject && (
-                <ProjectPanel project={currentProject} boards={boards.length} />
-              )}
-            </div>
+            {appUI.sidePanelShown && (
+              <div>
+                {currentProject && (
+                  <ProjectPanel
+                    project={currentProject}
+                    boards={boards.length}
+                  />
+                )}
+              </div>
+            )}
           </div>
         </main>
       </>

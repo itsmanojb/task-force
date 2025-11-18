@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
+import { useAppUI } from "@/context/AppUIContext";
 import { useProject } from "@/context/ProjectContext";
 import SideNav from "@/components/sidenav/Sidenav";
 import RightPanel from "@/components/right-panel/RightPanel";
@@ -10,6 +11,7 @@ import "./Dashboard.css";
 
 export const Dashboard = () => {
   const [currentProject, setCurrentproject] = useProject();
+  const [appUI] = useAppUI();
 
   useEffect(() => {
     if (currentProject) {
@@ -36,9 +38,7 @@ export const Dashboard = () => {
           <Navigate to={`/s/project/${currentProject.id}`} replace />
         )}
       </main>
-      <aside>
-        <RightPanel />
-      </aside>
+      <aside>{appUI.sidePanelShown && <RightPanel />}</aside>
     </div>
   );
 };
