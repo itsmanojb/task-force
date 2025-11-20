@@ -143,7 +143,14 @@ export const getBoard = async (id: string) => {
 
 export const deleteBoard = async (id: string) => {
   try {
+    const projectId = (await getBoard(id))?.projectId;
     await db.collection("boards").doc(id).delete();
+    await db
+      .collection("projects")
+      .doc(projectId)
+      .update({
+        boards: firebase.firestore.FieldValue.arrayRemove(id),
+      });
     return true;
   } catch (error) {
     console.log("Failed to delete board.", error);

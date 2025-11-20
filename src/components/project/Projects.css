@@ -27,8 +27,8 @@
         }
 
         .project {
-            background-color: #fff;
-            border: 1px solid #eee;
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--divider-color);
             padding: 16px 16px 20px;
             border-radius: 10px;
             margin: 8px 6px;
@@ -38,18 +38,18 @@
 
             h4 {
                 margin: 16px 0 4px;
-                color: #777;
+                color: var(--card-fg-color);
             }
 
             p {
-                color: #999;
+                color: var(--card-fg-color--muted);
                 font-size: 14px;
                 margin: 4px 0;
             }
 
             &:not(.new):hover {
-                box-shadow: 0 0px 20px rgba(60, 151, 247, 0.15);
-                border-color: #fff;
+                box-shadow: 0 0px 20px var(--highlight-box-shadow-color);
+                border-color: var(--highlight-border-color);
                 transform: translateY(-2px);
             }
 
@@ -71,16 +71,15 @@
 
             &.new {
                 min-height: 150px;
-                background-color: rgba(255, 255, 255, 0.4);
-                border: 1px dashed #e7e9ea;
+                background-color: var(--card-bg-color--trans);
+                border: 1px dashed var(--card-outline-color);
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-size: 30px;
-                color: #ccc;
 
                 &:hover {
-                    background-color: rgba(255, 255, 255, 0.6);
+                    background-color: var(--card-bg-color--trans-hover);
                 }
             }
         }
@@ -94,7 +93,7 @@
         &.archived {
             .project {
                 &.archived {
-                    opacity: 0.5;
+                    opacity: 0.35;
                     /*background-color: #eee;*/
                     /*border-color: #eee;*/
                     border: 1px dashed #bbb;

@@ -1,62 +1,56 @@
 .members-panel {
-  --count-height: 48px;
-  border: 1px solid #f9f7f7;
-  border-width: 1px 0 0 1px;
-  border-top-left-radius: 24px;
-  margin-right: -24px;
-  padding-right: 24px;
-  background: #fdfdfd;
-  height: calc(100vh - (var(--nav-size) + var(--count-height)));
-  color: var(--text-color-muted);
+    --count-height: 48px;
+    border: 1px solid var(--divider-color);
+    border-width: 1px 0 0 1px;
+    border-top-left-radius: 24px;
+    margin-right: -24px;
+    padding-right: 24px;
+    background-color: var(--background-color--muted);
+    height: calc(100dvh - var(--nav-size));
+    color: var(--text-color-muted);
 
-  &.project-members {
-    height: calc(100vh - (var(--nav-size) + var(--count-height) + 10px));
-  }
-
-  .count {
-    text-align: center;
-    padding: 16px 10px;
-    font-size: 14px;
-    line-height: 1;
-    height: var(--count-height);
-  }
-
-  .all-members {
-    height: 100%;
-    overflow: auto;
-
-    .member {
-      height: 100px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      cursor: default;
-
-      .icon {
-        height: 36px;
-        width: 36px;
-        border-radius: 50%;
+    .count {
         text-align: center;
-        line-height: 15px;
-        padding: 12px 2px;
-        font-size: 12px;
-        color: var(--color-accent);
-        font-weight: 500;
-        background-color: #f1f7fd;
-        transition: all .3s ease;
-      }
-
-      .name {
-        display: block;
-        text-align: center;
-        margin-top: 4px;
-        font-size: 13px;
-        color: var(--text-color);
-        transition: all .3s ease;
-        padding: 0 20px;
-      }
-
+        padding: 16px 10px;
+        font-size: 14px;
+        line-height: 1;
+        height: var(--count-height);
     }
-  }
+
+    .all-members {
+        height: calc(100% - 48px);
+        overflow: auto;
+
+        .member {
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: default;
+
+            .icon {
+                height: 36px;
+                width: 36px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 15px;
+                padding: 12px 2px;
+                font-size: 12px;
+                color: var(--color-accent);
+                font-weight: 500;
+                background-color: var(--card-alt-color);
+                transition: all 0.3s ease;
+            }
+
+            .name {
+                display: block;
+                text-align: center;
+                margin-top: 4px;
+                font-size: 13px;
+                transition: all 0.3s ease;
+                padding: 0 20px;
+            }
+        }
+    }
 }

@@ -20,22 +20,17 @@ const SecurePage = () => {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  const [appUI, setUI, uiActions] = useAppUI();
-  const [updateTime, setUpdateTime] = useState<number>();
+  const [appUI, , uiActions] = useAppUI();
 
-  // useEffect(() => {
-  //   setUI(appUI);
-  // });
-
-  const updatePage = (timestamp: number) => {
-    // setAppUI();
-    setUpdateTime(timestamp);
+  const closeModalAndRefresh = () => {
+    uiActions.closeModal();
+    uiActions.triggerRefresh();
   };
 
   return (
     <ProjectContextProvider>
       <DropdownContextProvider>
-        <Header update={updateTime} />
+        <Header />
       </DropdownContextProvider>
       <div className="page-content">
         <Outlet />
@@ -44,27 +39,27 @@ const SecurePage = () => {
         <>
           {appUI.modal === "addboard" && (
             <AddBoard
-              onAdd={(e) => updatePage(e)}
+              onAdd={() => closeModalAndRefresh()}
               onClose={() => uiActions.closeModal()}
             />
           )}
           {appUI.modal === "editboard" && (
             <EditBoard
               board={appUI.modalData}
-              onModify={(e) => updatePage(e)}
+              onModify={() => closeModalAndRefresh()}
               onClose={() => uiActions.closeModal()}
             />
           )}
           {appUI.modal === "addproject" && (
             <AddProject
-              onAdd={(e) => updatePage(e)}
+              onAdd={() => closeModalAndRefresh()}
               onClose={() => uiActions.closeModal()}
             />
           )}
           {appUI.modal === "editproject" && (
             <EditProject
               project={appUI.modalData}
-              onModify={(e) => updatePage(e)}
+              onModify={() => closeModalAndRefresh()}
               onClose={() => uiActions.closeModal()}
             />
           )}

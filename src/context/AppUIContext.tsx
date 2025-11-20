@@ -17,6 +17,7 @@ export interface AppUIState {
   boardsLayout: "list" | "grid";
   boardsSortOrder: string;
   showArchived: boolean;
+  refresh: boolean;
 }
 
 export interface AppUIActions {
@@ -28,6 +29,7 @@ export interface AppUIActions {
   setBoardsLayout: (layout: "list" | "grid") => void;
   setBoardsSortOrder: (order: string) => void;
   showArchivedProject: (shown: boolean) => void;
+  triggerRefresh: () => void;
 }
 
 // Tuple value type
@@ -61,6 +63,7 @@ export const AppUIContextProvider: React.FC<AppUIContextProviderProps> = ({
           boardsLayout: "grid",
           showArchived: false,
           boardsSortOrder: "auto",
+          refresh: false,
         };
   });
 
@@ -92,6 +95,9 @@ export const AppUIContextProvider: React.FC<AppUIContextProviderProps> = ({
 
     setBoardsSortOrder: (order) =>
       setAppUI((prev) => ({ ...prev, boardsSortOrder: order })),
+
+    triggerRefresh: () =>
+      setAppUI((prev) => ({ ...prev, refresh: !prev.refresh })),
   };
 
   return (

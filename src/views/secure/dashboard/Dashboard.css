@@ -7,7 +7,7 @@ main.content {
     height: 100%;
     display: grid;
     grid-template-columns: var(--sidenav-size) 1fr auto;
-    padding: 12px 0 0;
+    background-color: var(--header-bg-color);
 
     > div:not(.members-panel) {
         overflow-y: auto;
@@ -15,7 +15,7 @@ main.content {
 
     .all-boards {
         height: 100%;
-        background-color: #f5f7fa;
+        background-color: var(--page-content-color);
         border-radius: 24px 24px 0 0;
         overflow-y: auto;
 
@@ -42,7 +42,6 @@ main.content {
     }
 
     .sidebar {
-        background-color: #fff;
         width: var(--sidepanel-width);
     }
 }
@@ -74,7 +73,7 @@ main.content {
                 }
 
                 &:hover {
-                    background-color: #fff9;
+                    background-color: var(--button-bg-color--hover);
                     opacity: 0.8;
                 }
 
@@ -84,7 +83,7 @@ main.content {
 
                 &.active {
                     opacity: 1;
-                    background-color: #fffd;
+                    background-color: var(--button-bg-color);
                 }
             }
         }
@@ -141,9 +140,9 @@ main.content {
                 align-items: center;
                 text-decoration: none;
                 padding: 20px;
-                background-color: #fff;
-                border: 1px solid #f2f2f2;
-                color: #333;
+                background-color: var(--card-bg-color);
+                border: 1px solid var(--card-outline-color);
+                color: var(--card-fg-color--muted);
                 border-radius: 12px;
                 text-transform: capitalize;
                 height: 100%;
@@ -153,7 +152,7 @@ main.content {
                 .board-name {
                     font-size: 16px;
                     font-weight: 500;
-                    color: #888;
+                    color: var(--card-fg-color);
                 }
 
                 .board-type {
@@ -176,7 +175,6 @@ main.content {
                         margin: 0;
                         font-size: 14px;
                         line-height: 1;
-                        color: #888;
                     }
                     p + p {
                         &::before {
@@ -192,15 +190,15 @@ main.content {
                     li {
                         font-size: 11px;
                         height: 30px;
-                        color: #555;
                         width: 30px;
+                        color: var(--card-fg-color);
                         line-height: 1;
                         padding: 8px 0;
                         border-radius: 50%;
                         text-align: center;
-                        background: #eee;
+                        background: var(--card-alt-color);
                         font-weight: 600;
-                        border: 2px solid #fff;
+                        border: 2px solid var(--card-bg-color);
                         transition: all 0.3s ease;
 
                         &:hover {
@@ -224,14 +222,13 @@ main.content {
                 .meta {
                     display: block;
                     font-size: 13px;
-                    color: #aaa;
                     font-weight: 500;
                     line-height: 1;
                 }
 
                 &:hover {
                     box-shadow: 0 0px 20px rgba(60, 151, 247, 0.15);
-                    border-color: #fff;
+                    border-color: var(--highlight-border-color);
                     transform: translateY(-2px);
                 }
 
@@ -263,9 +260,9 @@ main.content {
                 text-decoration: none;
                 align-items: flex-start;
                 padding: 20px 20px 15px;
-                background-color: #fff;
-                border: 1px solid #f2f2f2;
-                color: #333;
+                background-color: var(--card-bg-color);
+                border: 1px solid var(--card-outline-color);
+                color: var(--card-fg-color--muted);
                 border-radius: 10px;
                 text-transform: capitalize;
                 min-height: 220px;
@@ -277,7 +274,7 @@ main.content {
                     font-size: 20px;
                     font-weight: 600;
                     margin: 4px 0 0;
-                    color: #888;
+                    color: var(--card-fg-color);
                 }
 
                 .board-type {
@@ -301,7 +298,6 @@ main.content {
                         margin: 0;
                         font-size: 14px;
                         line-height: 1;
-                        color: #888;
 
                         & + p {
                             margin-top: 10px;
@@ -326,15 +322,15 @@ main.content {
                     li {
                         font-size: 12px;
                         height: 36px;
-                        color: #555;
+                        color: var(--card-fg-color);
                         width: 36px;
                         line-height: 1;
                         padding: 10px 0;
                         border-radius: 50%;
                         text-align: center;
-                        background: #eee;
+                        background: var(--card-alt-color);
                         font-weight: 600;
-                        border: 2px solid #fff;
+                        border: 2px solid var(--card-bg-color);
                         transition: all 0.3s ease;
 
                         & + li {
@@ -358,14 +354,13 @@ main.content {
                 .meta {
                     display: block;
                     font-size: 12px;
-                    color: #aaa;
                     font-weight: 500;
                     line-height: 1;
                 }
 
                 &:hover {
-                    box-shadow: 0 0px 20px rgba(60, 151, 247, 0.15);
-                    border-color: #fff;
+                    box-shadow: 0 0px 20px var(--highlight-box-shadow-color);
+                    border-color: var(--highlight-border-color);
                     transform: translateY(-2px);
                 }
 
@@ -383,8 +378,7 @@ main.content {
 
 .no-boards {
     padding: 30px;
-    font-size: 18px;
-    color: #888;
+    color: var(--fg-color--muted);
 
     span {
         color: var(--color-accent);

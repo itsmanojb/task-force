@@ -5,8 +5,8 @@
 
     .scroll {
         height: 100%;
-        background-color: #f5f7fa;
-        border: 1px solid #f5f7fa;
+        background-color: var(--background-color);
+        border: 1px solid var(--divider-color);
         border-radius: 24px 0 0 0;
         overflow-x: auto;
     }
@@ -74,7 +74,7 @@
 .trello-board {
     --pt: 40px;
     --pb: 20px;
-    --column-bg-color: #e8eaec;
+    --column-bg-color: var(--background-color--muted);
     --border-radius: 15px;
     --column-min-height: 130px;
 
@@ -145,7 +145,7 @@
             height: 100%;
             display: grid;
             transition: all 0.3s ease;
-            border: 1px dashed #ddd;
+            border: 1px dashed var(--card-outline-color);
 
             &:hover {
                 background-color: var(--column-bg-color);
@@ -182,14 +182,14 @@
         /*z-index: 1;*/
 
         h2 {
-            color: #17394d;
+            color: var(--card-fg-color);
             font-weight: 600;
             font-size: 18px;
             margin: 15px 0;
         }
 
         .column-name-input {
-            color: #17394d;
+            color: var(--card-fg-color);
             font-weight: 600;
             font-size: 18px;
             background-color: transparent;
@@ -230,11 +230,11 @@
         height: 46px;
         align-items: center;
         justify-content: center;
-        background-color: #fff;
+        background-color: var(--card-bg-color);
         border-radius: calc(var(--border-radius) - 2px);
         margin: 10px 1rem;
         cursor: pointer;
-        font-size: 16px;
+        font-size: 14px;
         /*border: 1px solid #f2f2f2;*/
 
         span {
@@ -252,7 +252,7 @@
     }
 
     .card__item {
-        background-color: white;
+        background-color: var(--card-bg-color);
         border-radius: var(--border-radius);
         box-shadow: 0 1px 0 rgba(9, 45, 66, 0.25);
         padding: 0.75rem;
@@ -314,7 +314,7 @@
     }
 
     .card__title {
-        color: #17394d;
+        color: var(--card-fg-color);
         margin: 0 0 4px;
         font-size: 16px;
         font-weight: 500;

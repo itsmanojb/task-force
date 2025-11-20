@@ -7,10 +7,10 @@
     top: 0;
     left: 0;
     z-index: 11;
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--backdrop-color);
 
     @supports (backdrop-filter: none) {
-        background: rgba(255, 255, 255, 0.75);
+        background: var(--backdrop-color);
         backdrop-filter: blur(8px);
     }
 
@@ -39,6 +39,7 @@
             margin: 0 0 20px;
             font-size: 30px;
             font-weight: 500;
+            color: var(--fg-color);
         }
     }
 }
@@ -93,7 +94,7 @@
         height: 120px;
         font-family: inherit;
         font-size: 15px;
-        border: 1px solid #d8d8d8;
+        border: 1px solid var(--input-border);
         background-color: transparent;
         padding: 2px 0;
         border-radius: 4px;

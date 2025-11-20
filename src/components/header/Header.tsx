@@ -17,6 +17,7 @@ import { Navbar, NavItem } from "./Navbar";
 
 const Header = () => {
   const { currentUser } = useAuth();
+  const [{ refresh }] = useAppUI();
   const [currentProject, setCurrentProject] = useProject();
   const [appUI, _, actions] = useAppUI();
   const [currentPage, setCurrentPage] = useState("Select Project");
@@ -30,7 +31,7 @@ const Header = () => {
       setProjects(projects);
       // await getAllColumns(data.id, setColumns);
     })();
-  }, [currentUser]);
+  }, [currentUser, refresh]);
 
   useEffect(() => {
     if (currentProject) {

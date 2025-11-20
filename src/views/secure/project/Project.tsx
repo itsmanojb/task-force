@@ -36,7 +36,7 @@ export const ProjectDashboard = () => {
     } else {
       setLoading(false);
     }
-  }, [currentUser, currentProject]);
+  }, [currentUser, currentProject, appUI.refresh]);
 
   // const navigateTo = (path: string) => {
   //   if (path === "dash") {

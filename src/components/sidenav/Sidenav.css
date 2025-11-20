@@ -1,16 +1,11 @@
-/* Small screens */
-/* Large screens */
-:root {
-    font-size: 16px;
+.sidenav {
     --text-primary: #888;
     --text-secondary: #ececec;
-    --bg-primary: #fff;
-    --bg-secondary: #f6f7f8;
+    --bg-primary: var(--header-bg-color);
+    --bg-secondary: var(--header-alt-color--hover);
     --transition-speed: 600ms;
     --sidenav-top-offset: 0;
-}
 
-.sidenav {
     position: fixed;
     background-color: var(--bg-primary);
     transition: width 600ms ease;
@@ -57,13 +52,15 @@
         /*filter: grayscale(100%) opacity(0.7);*/
         transition: background 0.3s ease;
         margin: 5px auto;
-        border-radius: 50%;
+        border-radius: 10px;
         cursor: pointer;
 
-        &:hover,
-        &.active {
+        &:hover {
             /*filter: grayscale(0%) opacity(1);*/
             background: var(--bg-secondary);
+        }
+
+        &.active {
             color: var(--color-accent);
         }
 

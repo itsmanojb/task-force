@@ -20,7 +20,7 @@ const BoardMembers = ({
     <div className={"members-panel " + klass}>
       <div className="count">{members.length} Members</div>
       <div className="all-members">
-        {members.length &&
+        {members.length > 0 &&
           members.map((member, i) => (
             <div className="member" key={i}>
               <span className="icon">{initials(member)}</span>

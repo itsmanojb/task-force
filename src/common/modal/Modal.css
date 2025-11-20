@@ -4,7 +4,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(39, 50, 64, 0.45);
+    background-color: var(--dark-overlay);
     z-index: 11;
 }
 
@@ -13,7 +13,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
+    background-color: var(--card-bg-color);
     max-width: 600px;
     min-height: 150px;
     z-index: 2;
@@ -26,7 +26,7 @@
         display: grid;
         grid-template-columns: 1fr auto 30px;
         align-items: center;
-        border-bottom: 1px solid #f2f2f2;
+        border-bottom: 1px solid var(--divider-color);
 
         &.cleaner {
             border-bottom: 0;
@@ -45,18 +45,18 @@
                 display: flex;
                 align-items: center;
                 margin: 0;
-                border: 1px solid #f2f2f2;
+                border: 1px solid var(--divider-color);
                 padding: 8px 12px;
                 margin: 0 2px;
                 font-size: 16px;
                 cursor: pointer;
-                border-radius: 3px;
+                border-radius: 15px;
                 color: #888;
-                background: transparent;
+                background: var(--button-bg-color);
                 transition: background 0.3s ease;
 
                 &:hover {
-                    background-color: #fafafa;
+                    background-color: var(--button-bg-color--hover);
                 }
 
                 span {
@@ -138,7 +138,7 @@
     }
 
     .modal-content {
-        padding: 30px 20px;
+        padding: 20px 20px 40px;
 
         .task-title {
             font-size: 32px;
@@ -154,7 +154,7 @@
             gap: 20px 10px;
 
             dt {
-                color: #888;
+                color: var(--card-fg-color--muted);
                 font-size: 14px;
             }
 
@@ -162,7 +162,7 @@
                 padding: 0;
                 margin: 0;
                 font-size: 14px;
-                color: #454545;
+                color: var(--card-fg-color);
 
                 .tags {
                     margin: 0 0.25rem;
@@ -231,7 +231,7 @@
             /*font-size: 16px;*/
             margin-left: 0.25rem;
             display: inline-block;
-            border-bottom: 1px dashed #ddd;
+            border-bottom: 1px dashed var(--card-fg-color--muted);
         }
 
         .input-row,

@@ -8,6 +8,7 @@ import { getProjects } from "@/utils/data";
 import Icon from "@/components/misc/IonIcon";
 import { Project } from "@/types/model";
 import "./Projects.css";
+import Checkbox from "../misc/Checkbox";
 
 const ProjectSelector = ({
   onSelection,
@@ -29,7 +30,7 @@ const ProjectSelector = ({
       }
     })();
     // return () => (isMountedRef.current = false);
-  }, [currentUser, isMountedRef]);
+  }, [currentUser, isMountedRef, appUI.refresh]);
 
   const toggleArchive = () => {
     actions.showArchivedProject(!appUI.showArchived);
@@ -63,13 +64,12 @@ const ProjectSelector = ({
             <div className="info">
               <span className="label">All projects</span>
               <div className="project-toggle">
-                <input
-                  type="checkbox"
+                <Checkbox
                   id="archiveToggle"
+                  label="Show archived"
                   checked={!!appUI.showArchived}
                   onChange={toggleArchive}
-                />{" "}
-                <span>Show archived</span>
+                />
               </div>
             </div>
             <div className="project-list">
