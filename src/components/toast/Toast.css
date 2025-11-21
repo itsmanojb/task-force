@@ -44,8 +44,8 @@
   margin-bottom: 15px;
   width: 300px;
   /* max-height: 100px; */
-  border-radius: 4px;
-  box-shadow: 0 0 10px rgba(168, 168, 168, 0.8);
+  /*box-shadow: 0 0 10px rgba(168, 168, 168, 0.8);*/
+  border-radius: 8px;
   color: #000;
   opacity: .9;
 }

@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Google+Sans:300,400,500,700");
 
 :root {
-    --page-bg: #fff;
     --color-accent: #3c97f7;
     --color-accent-alt: #3480de;
     --color-accent-light: #deebfc;
@@ -18,6 +17,49 @@
     --nav-size: 64px;
     --sidenav-size: 64px;
     --sidepanel-width: 300px;
+
+
+    --fg-color: light-dark(#222, #ababab);
+    --fg-color--muted: light-dark(#666, #ababab88);
+    --background-color: light-dark(#fff, #151b23);
+    --background-color--muted: light-dark(#fdfdfd, #1e242d);
+    --header-bg-color: light-dark(#fff, #262c36);
+    --header-bg-color--hover: light-dark(#efefef, #313742);
+    --header-alt-color: light-dark(#f6f7f8, #2a313c);
+    --header-alt-color--hover: light-dark(#f6f7f8, #212830);
+    --page-content-color: light-dark(#f5f7fa, #151b23);
+    --card-bg-color: light-dark(#fff, #262c36);
+    --card-alt-color: light-dark(#eee, #313a48);
+    --card-bg-color--trans: light-dark(
+        light-dark(255, 255, 255, 0.4),
+        #262c3630
+    );
+    --card-bg-color--trans-hover: light-dark(
+        rgba(255, 255, 255, 0.7),
+        #262c36e0
+    );
+    --card-outline-color: light-dark(#f2f2f2, #333);
+    --card-fg-color: light-dark(#333, #a9a9a9);
+    --card-fg-color--muted: light-dark(#999, #555);
+    --board-bg-color: light-dark(#f5f7fa, #151b23);
+    --column-bg-color: light-dark(#e7e8eaa3, #1e242d);
+
+    --divider-color: light-dark(#f2f2f2, #2a313c);
+    --highlight-border-color: light-dark(#eee, #afafaf14);
+    --highlight-box-shadow-color: light-dark(
+        rgba(60, 151, 247, 0.15),
+        rgb(193 193 193 / 10%)
+    );
+    --button-bg-color: light-dark(#f1f3f4, var(--header-bg-color));
+    --button-bg-color--hover: light-dark(#fff, var(--header-alt-color));
+    --input-border: light-dark(rgba(0, 0, 0, 0.1), #46464646);
+    --input-border-hover: light-dark(rgba(0, 0, 0, 0.2), #67676767);
+
+    --dark-overlay: light-dark(rgba(39, 50, 64, 0.45), rgb(14 17 21 / 85%));
+    --backdrop-color: light-dark(
+        rgba(255, 255, 255, 0.75),
+        rgb(14 17 21 / 85%)
+    );
 }
 
 *,
@@ -43,45 +85,6 @@ body {
     overflow: hidden;
     color-scheme: light dark;
     background-color: light-dark(#fff, #262c36);
-
-    --fg-color: light-dark(#222, #ababab);
-    --fg-color--muted: light-dark(#666, #ababab88);
-    --background-color: light-dark(#fff, #151b23);
-    --background-color--muted: light-dark(#fdfdfd, #1e242d);
-    --header-bg-color: light-dark(#fff, #262c36);
-    --header-alt-color: light-dark(#fbfbfb, #2a313c);
-    --header-alt-color--hover: light-dark(#f6f7f8, #212830);
-    --page-content-color: light-dark(#f5f7fa, #151b23);
-    --card-bg-color: light-dark(#fff, #262c36);
-    --card-alt-color: light-dark(#eee, #313a48);
-    --card-bg-color--trans: light-dark(
-        light-dark(255, 255, 255, 0.4),
-        #262c3630
-    );
-    --card-bg-color--trans-hover: light-dark(
-        rgba(255, 255, 255, 0.7),
-        #262c36e0
-    );
-    --card-outline-color: light-dark(#e7e9ea, #333);
-    --card-fg-color: light-dark(#333, #a9a9a9);
-    --card-fg-color--muted: light-dark(#999, #555);
-
-    --divider-color: light-dark(#f2f2f2, #2a313c);
-    --highlight-border-color: light-dark(#eee, #afafaf14);
-    --highlight-box-shadow-color: light-dark(
-        rgba(60, 151, 247, 0.15),
-        rgb(193 193 193 / 10%)
-    );
-    --button-bg-color: light-dark(#f1f3f4, var(--header-bg-color));
-    --button-bg-color--hover: light-dark(#fff, var(--header-alt-color));
-    --input-border: light-dark(rgba(0, 0, 0, 0.1), #46464646);
-    --input-border-hover: light-dark(rgba(0, 0, 0, 0.2), #67676767);
-
-    --dark-overlay: light-dark(rgba(39, 50, 64, 0.45), rgb(14 17 21 / 85%));
-    --backdrop-color: light-dark(
-        rgba(255, 255, 255, 0.75),
-        rgb(14 17 21 / 85%)
-    );
 }
 
 ul,
@@ -106,7 +109,7 @@ button:focus {
 
 .login-ui {
     height: 100vh;
-    background-color: var(--page-bg);
+    background-color: var(--background-color);
 
     .wrapper {
         display: grid;
@@ -128,8 +131,8 @@ button:focus {
 
         .help-block {
             margin: 20px 0;
-            font-size: 16px;
-            color: var(--text-color-muted);
+            font-size: 14px;
+            color: var(--fg-color--muted);
         }
     }
 
@@ -375,12 +378,12 @@ button:focus {
 
     &.aux {
         color: var(--color-accent);
-        background-color: #fafafa;
+        background-color: var(--button-bg-color);
 
         &:hover,
         &:active,
         &:focus {
-            background: #f2f2f2;
+            background-color: var(--button-bg-color--hover);
         }
     }
 
@@ -426,14 +429,14 @@ button:focus {
     }
 
     p {
-        color: var(--text-color-muted);
+        color: var(--fg-color--muted);
     }
 
     h2 {
         font-size: 30px;
         font-weight: 500;
         margin: -10px 0 30px;
-        color: var(--text-color);
+        color: var(--fg-color);
     }
 
     @media screen and (max-width: 767px) {

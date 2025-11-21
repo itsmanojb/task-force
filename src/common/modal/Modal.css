@@ -87,12 +87,13 @@
                 font-size: 16px;
                 cursor: pointer;
                 border-radius: 2px;
-                color: #888;
+                color: var(--fg-color);
                 background: transparent;
-                transition: color 0.3s ease;
+                transition: opacity 0.3s ease;
+                opacity:.5;
 
                 &:hover {
-                    color: #555;
+                    opacity: 1;
                 }
 
                 span {
@@ -121,11 +122,17 @@
 
         .close {
             justify-self: center;
-            font-size: 18px;
-            color: #666;
+            font-size: 22px;
+            color: var(--fg-color);
             line-height: 1;
             height: 16px;
             cursor: pointer;
+            transition: opacity 0.3s ease;
+            opacity:.5;
+
+            &:hover {
+                opacity: 1;
+            }
         }
 
         &.no-close {
@@ -142,7 +149,7 @@
 
         .task-title {
             font-size: 32px;
-            color: #777;
+            color: var(--fg-color);
             font-weight: 500;
             margin: 0 0 20px;
         }

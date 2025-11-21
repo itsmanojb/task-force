@@ -4,7 +4,7 @@
 .prompt-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.45);
+    background: var(--backdrop-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,7 +13,7 @@
 
 .prompt-wrapper {
     width: 360px;
-    background: #fff;
+    background: var(--card-bg-color);
     border-radius: var(--border-radius);
     box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
     transform-origin: top center;
@@ -27,12 +27,12 @@
         padding: 10px 0 0;
         font-size: 18px;
         margin: 0;
-        color: #444;
+        color: var(--fg-color);
     }
 
     p {
         font-size: 14px;
-        color: #666;
+        color: var(--fg-color--muted);
         margin: 10px 0;
     }
 }
@@ -53,12 +53,12 @@
         min-width: 80px;
 
         &.aux {
-            background-color: #f8f8f8;
+            background: var(--button-bg-color);
             color: var(--color-accent);
             margin-right: 5px;
 
             &:hover {
-                background-color: #f2f2f2;
+                background: var(--button-bg-color--hover);
             }
         }
     }

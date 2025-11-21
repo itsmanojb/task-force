@@ -194,7 +194,7 @@
         height: 50px;
         display: flex;
         align-items: center;
-        border-radius: var(--border-radius);
+        /*border-radius: var(--border-radius);*/
         /*transition: background var(--speed);*/
         padding: 0.5rem 1rem;
         font-size: 1rem;
