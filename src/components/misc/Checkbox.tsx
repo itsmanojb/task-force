@@ -23,12 +23,14 @@ export default function Checkbox({
         className="chk-input"
         checked={checked}
         onChange={(e) => onChange?.(e.target.checked)}
+        onClick={(e) => e.stopPropagation()}
       />
 
       <label
         htmlFor={id}
         className="chk-label"
         aria-hidden={label ? "false" : "true"}
+        onClick={(e) => e.stopPropagation()}
       >
         <svg viewBox="0 0 24 24" className="chk-svg">
           <path

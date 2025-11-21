@@ -61,7 +61,7 @@ export const EditProject = ({
               message: "Project has been updated",
               id: toasts.length,
               title: "Success",
-              backgroundColor: "#47bf50",
+              backgroundColor: "var(--success-green)",
               icon: "checkmark-circle",
             },
           ]);

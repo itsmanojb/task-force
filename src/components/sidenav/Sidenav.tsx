@@ -39,7 +39,7 @@ const SideNav = ({ target }: { target: string }) => {
             : "Failed to archive the project",
           id: toasts.length,
           title: archived ? "Success" : "Error",
-          backgroundColor: archived ? "#47bf50" : "#d9534f",
+          backgroundColor: archived ? "var(--success-green)" : "#d9534f",
           icon: archived ? "checkmark-circle" : "warning",
         },
       ]);

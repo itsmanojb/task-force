@@ -18,6 +18,8 @@
     --sidenav-size: 64px;
     --sidepanel-width: 300px;
 
+    --success-green: #268a2e;
+    --danger-red: #9d2323;
 
     --fg-color: light-dark(#222, #ababab);
     --fg-color--muted: light-dark(#666, #ababab88);
@@ -477,7 +479,7 @@ button:focus {
     --secondary: var(--button-bg-color); /* unchecked bg */
     --duration: 260ms;
     --ring: rgba(76, 175, 80, 0.22);
-    --radius: 4px;
+    --radius: var(--cb-radius, 4px);
 
     display: inline-flex;
     align-items: center;

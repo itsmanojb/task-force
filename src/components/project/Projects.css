@@ -9,6 +9,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            min-height: 54px;
 
             span.label {
                 font-size: 15px;
@@ -27,6 +28,7 @@
         }
 
         .project {
+            position:relative;
             background-color: var(--card-bg-color);
             border: 1px solid var(--divider-color);
             padding: 16px 16px 20px;
@@ -45,6 +47,12 @@
                 color: var(--card-fg-color--muted);
                 font-size: 14px;
                 margin: 4px 0;
+            }
+
+            .selection-cb{
+                position:absolute;
+                right:10px;
+                top:10px;
             }
 
             &:not(.new):hover {
@@ -93,10 +101,18 @@
         &.archived {
             .project {
                 &.archived {
-                    opacity: 0.35;
-                    /*background-color: #eee;*/
                     /*border-color: #eee;*/
-                    border: 1px dashed #bbb;
+                    background-color: hsl(from var(--card-bg-color) h s l / 30%);
+                    border: transparent;
+
+                    h4{
+                        opacity:.5
+                    }
+
+                    p {
+                        color: var(--card-fg-color);
+                        opacity:.35
+                    }
 
                     &:hover {
                         opacity: 0.8;
@@ -106,16 +122,25 @@
         }
     }
 
-    .project-toggle {
+    .list-actions {
         display: flex;
         align-items: center;
 
-        input[type="checkbox"] {
-            margin: 2px 10px 0;
+        span.div{
+            padding-inline:10px;
+            color:var(--fg-color);
+            opacity:.3
         }
 
-        span {
-            font-size: 14px;
+        button{
+            background:transparent;
+            border:none;
+            font-size:14px;
+            cursor:pointer;
+            color: var(--fg-color)
+        }
+        button.delete{
+            color: var(--danger-red);
         }
     }
 

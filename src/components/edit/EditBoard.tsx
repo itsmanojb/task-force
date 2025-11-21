@@ -60,7 +60,7 @@ export const EditBoard = ({ board, onModify, onClose }: EditBoardProps) => {
               message: "Board has been updated",
               id: toasts.length,
               title: "Success",
-              backgroundColor: "#47bf50",
+              backgroundColor: "var(--success-green)",
               icon: "checkmark-circle",
             },
           ]);

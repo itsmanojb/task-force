@@ -12,7 +12,7 @@
 }
 
 .prompt-wrapper {
-    width: 360px;
+    width: 400px;
     background: var(--card-bg-color);
     border-radius: var(--border-radius);
     box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);

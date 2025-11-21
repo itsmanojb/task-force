@@ -55,7 +55,7 @@ export const AddBoard = ({ onAdd, onClose }: AddBoardProps) => {
               message: "Board has been created",
               id: toasts.length,
               title: "Success",
-              backgroundColor: "#47bf50",
+              backgroundColor: "var(--success-green)",
               icon: "checkmark-circle",
             },
           ]);

@@ -27,9 +27,9 @@ main.content {
 
         .archive-alert {
             padding: 30px;
-            font-size: 18px;
+            font-size: 16px;
             color: #888;
-            background: #f5f7fa;
+            background: var(--background-color--muted);
             /*padding: 20px 30px;*/
             /*color: #4b4e52;*/
             position: sticky;

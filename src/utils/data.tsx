@@ -18,10 +18,6 @@ export const getProjects = async (email: string) => {
   }
 };
 
-/**
- * Method which adds a project
- * @param {object} project the project which has to be created
- */
 export const addProject = async (project: Omit<Project, "id">) => {
   try {
     await db.collection("projects").add(project);
@@ -32,10 +28,6 @@ export const addProject = async (project: Omit<Project, "id">) => {
   }
 };
 
-/**
- * Method which retriwves a project
- * @param {string} id id of the project
- */
 export const getProject = async (id: string) => {
   try {
     return (
@@ -48,11 +40,6 @@ export const getProject = async (id: string) => {
   }
 };
 
-/**
- * Method which updates a project (star, unstar or archive)
- * @param {string} id id of the project which has to be edited
- * @param {object} project the updated data
- */
 export const updateProject = async (id: string, project: Partial<Project>) => {
   try {
     await db.collection("projects").doc(id).update(project);
@@ -63,16 +50,27 @@ export const updateProject = async (id: string, project: Partial<Project>) => {
   }
 };
 
-/**
- * Method which updates a project (star, unstar or archive)
- * @param {string} id id of the project which has to be edited
- */
 export const archiveProject = async (id: string) => {
   try {
     await db.collection("projects").doc(id).update({ archived: true });
     return true;
   } catch (error) {
     console.log("Failed to archive project.", error);
+    return false;
+  }
+};
+
+export const deleteProjects = async (ids: string[]) => {
+  try {
+    const batch = db.batch();
+    ids.forEach((id) => {
+      const docRef = db.collection("projects").doc(id);
+      batch.delete(docRef);
+    });
+    await batch.commit();
+    return true;
+  } catch (error) {
+    console.log("Failed to delete projects.", error);
     return false;
   }
 };
@@ -93,10 +91,6 @@ export const getBoards = async (email: string, id: string) => {
   }
 };
 
-/**
- * Method which adds a board
- * @param {object} board the board which has to be created
- */
 export const addBoard = async (board: Omit<Board, "id" | "created">) => {
   try {
     const docRef = await db.collection("boards").add(board);
@@ -112,11 +106,6 @@ export const addBoard = async (board: Omit<Board, "id" | "created">) => {
   }
 };
 
-/**
- * Method which updates a board
- * @param {string} id for the doc
- * @param {object} board the board which has to be edited
- */
 export const editBoard = async (id: string, board: Partial<Board>) => {
   try {
     await db.collection("boards").doc(id).update(board);
@@ -127,10 +116,6 @@ export const editBoard = async (id: string, board: Partial<Board>) => {
   }
 };
 
-/**
- * Gets a single board with a given ID
- * @param {string} id single board ID
- */
 export const getBoard = async (id: string) => {
   try {
     const board: any = await db.collection("boards").doc(id).get();
@@ -195,11 +180,6 @@ export const addColumn = async (column: Column) => {
   }
 };
 
-/**
- * to update column
- * @param {string} id the id of the column
- * @param {any} column updated schema of column
- */
 export const updateColumn = async (id: string, column: Partial<Column>) => {
   try {
     await db.collection("columns").doc(id).update(column);
@@ -209,10 +189,6 @@ export const updateColumn = async (id: string, column: Partial<Column>) => {
   }
 };
 
-/**
- * to delete column
- * @param {string} id the id of the column
- */
 export const deleteColumn = async (id: string) => {
   try {
     await db.collection("columns").doc(id).delete();
@@ -223,11 +199,6 @@ export const deleteColumn = async (id: string) => {
   }
 };
 
-/**
- * to rename column
- * @param {string} id the id of the column
- * @param {string} name new name of the column
- */
 export const renameColumn = async (id: string, name: string) => {
   try {
     await db.collection("columns").doc(id).update({ name });
